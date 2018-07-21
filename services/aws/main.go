@@ -8,25 +8,32 @@ import (
 )
 
 func GetAWSEC2InstanceInformation(RandomString string) string {
-	// AWSTry()
+	AWSTry()
 
 	return RandomString
 }
 
 func AWSTry () {
-	Ec2Service := ec2.New(session.New())
+// aws ec2 describe-instances --filters 'Name=tag:Name,Values=dev-server-*'
+	Ec2Service := ec2.New(session.New(&aws.Config{Region: aws.String("us-west-2")}))
 
 	Input := &ec2.DescribeInstancesInput{
-		InstanceIds: []*string{
-			aws.String("i-1234567890abcdef0"),
-		},
+	    Filters: []*ec2.Filter{
+	        {
+	            Name: aws.String("instance-type"),
+	            Values: []*string{
+	                aws.String("t2.micro"),
+	            },
+	        },
+	    },
 	}
 
-	_, err := Ec2Service.DescribeInstances(Input)
+	result, err := Ec2Service.DescribeInstances(Input)
 
 	if err != nil {
 		fmt.Println(err.Error());
 	}
 
+	fmt.Println(result)
 	fmt.Println("resutl");
 }
