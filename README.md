@@ -15,3 +15,7 @@ go run main.go
 go build main.go
 ./main
 ```
+
+## Backlog
+1. Linter
+2. Testing
