@@ -14,8 +14,7 @@ func GetAWSEC2InstanceInformation(RandomString string) string {
 }
 
 func AWSTry () {
-// aws ec2 describe-instances --filters 'Name=tag:Name,Values=dev-server-*'
-	Ec2Service := ec2.New(session.New(&aws.Config{Region: aws.String("us-west-2")}))
+	Ec2Client := ec2.New(session.New(&aws.Config{Region: aws.String("us-west-2")}))
 
 	Input := &ec2.DescribeInstancesInput{
 	    Filters: []*ec2.Filter{
@@ -28,7 +27,7 @@ func AWSTry () {
 	    },
 	}
 
-	result, err := Ec2Service.DescribeInstances(Input)
+	result, err := Ec2Client.DescribeInstances(Input)
 
 	if err != nil {
 		fmt.Println(err.Error());
